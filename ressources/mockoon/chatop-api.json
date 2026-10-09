@@ -317,7 +317,7 @@
       "responses": [
         {
           "uuid": "5b6cd9ec-dcd6-4739-8692-58bca277db9e",
-          "body": "{\"message\": \"Rental created!\"}",
+          "body": "{\n  \"message\": \"Rental created!\"\n}",
           "latency": 0,
           "statusCode": 201,
           "label": "Success",
