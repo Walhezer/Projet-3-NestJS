@@ -52,10 +52,24 @@ export class AuthService {
     return this.generateToken(user.id, user.email);
   }
 
+  async getMe(userId: number) {
+    const user = await this.prisma.users.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Utilisateur introuvable');
+    }
+
+    const { password, ...safeUser } = user;
+    return safeUser;
+  }
+
   private generateToken(userId: number, email: string) {
     const payload = { sub: userId, email };
     return {
       token: this.jwtService.sign(payload),
     };
+    
   }
 }
