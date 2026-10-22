@@ -7,9 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RentalsModule } from './rentals/rentals.module';
 import { MessagesModule } from './messages/messages.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, RentalsModule, MessagesModule],
+  imports: [PrismaModule, AuthModule, RentalsModule, MessagesModule, UserModule],
   controllers: [AppController],
   providers: [
     AppService,
