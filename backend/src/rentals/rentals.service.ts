@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRentalDto } from './dto/create-rental.dto';
 import { UpdateRentalDto } from './dto/update-rental.dto';
-import { PrismaService } from '../prisma/prisma.service'; // 1. Import de Prisma
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class RentalsService {
@@ -12,8 +12,23 @@ export class RentalsService {
   }
 
   async findAll() {
-    const rentalsList = await this.prisma.rentals.findMany();
-    return { rentals: rentalsList };
+    const rentalsList = await this.prisma.rentals.findMany({
+      include: {
+        users: true,
+      },
+    });
+
+    const formattedRentals = rentalsList.map(rental => {
+      const { users, ...rentalData } = rental;
+      const { password, ...safeOwner } = users;
+      
+      return {
+        ...rentalData,
+        owner: safeOwner,
+      };
+    });
+
+    return { rentals: formattedRentals };
   }
 
   findOne(id: number) {
