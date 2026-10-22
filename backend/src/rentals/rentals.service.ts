@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRentalDto } from './dto/create-rental.dto';
 import { UpdateRentalDto } from './dto/update-rental.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -42,12 +42,39 @@ export class RentalsService {
     return { rentals: formattedRentals };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rental`;
+  async findOne(id: number) {
+    const rental = await this.prisma.rentals.findUnique({
+      where: { id },
+      include: {
+        users: true,
+      },
+    });
+
+    if (!rental) {
+      throw new NotFoundException('Rental not found');
+    }
+
+    const { users, ...rentalData } = rental;
+    const { password, ...safeOwner } = users;
+    
+    return {
+      ...rentalData,
+      owner: safeOwner,
+    };
   }
 
-  update(id: number, updateRentalDto: UpdateRentalDto) {
-    return `This action updates a #${id} rental`;
+  async update(id: number, updateRentalDto: UpdateRentalDto) {
+    await this.prisma.rentals.update({
+      where: { id },
+      data: {
+        name: updateRentalDto.name,
+        surface: updateRentalDto.surface ? Number(updateRentalDto.surface) : undefined,
+        price: updateRentalDto.price ? Number(updateRentalDto.price) : undefined,
+        description: updateRentalDto.description,
+      },
+    });
+
+    return { message: 'Rental updated!' };
   }
 
   remove(id: number) {

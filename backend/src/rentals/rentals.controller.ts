@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, UseInterceptors, UploadedFile, Request } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, NoFilesInterceptor } from '@nestjs/platform-express';
 import { RentalsService } from './rentals.service';
 import { CreateRentalDto } from './dto/create-rental.dto';
 import { UpdateRentalDto } from './dto/update-rental.dto';
@@ -41,6 +41,7 @@ export class RentalsController {
   }
 
   @Put(':id')
+  @UseInterceptors(NoFilesInterceptor())
   update(@Param('id') id: string, @Body() updateRentalDto: UpdateRentalDto) {
     return this.rentalsService.update(+id, updateRentalDto);
   }
