@@ -1,16 +1,21 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, UseInterceptors, UploadedFile, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, UseInterceptors, UploadedFile, Request } from '@nestjs/common';
 import { FileInterceptor, NoFilesInterceptor } from '@nestjs/platform-express';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { RentalsService } from './rentals.service';
 import { CreateRentalDto } from './dto/create-rental.dto';
 import { UpdateRentalDto } from './dto/update-rental.dto';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
+@ApiTags('Rentals')
+@ApiBearerAuth()
 @Controller('rentals')
 export class RentalsController {
   constructor(private readonly rentalsService: RentalsService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Créer une nouvelle location' })
+  @ApiResponse({ status: 201, description: 'Rental created!' })
   @UseInterceptors(FileInterceptor('picture', {
     storage: diskStorage({
       destination: './uploads',
@@ -31,23 +36,24 @@ export class RentalsController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Récupérer toutes les locations' })
+  @ApiResponse({ status: 200, description: 'Retourne le tableau des locations' })
   findAll() {
     return this.rentalsService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Récupérer une location par son id' })
+  @ApiResponse({ status: 200, description: 'Retourne la location et les infos du propriétaire' })
   findOne(@Param('id') id: string) {
     return this.rentalsService.findOne(+id);
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Mettre à jour une location' })
+  @ApiResponse({ status: 200, description: 'Rental updated!' })
   @UseInterceptors(NoFilesInterceptor())
   update(@Param('id') id: string, @Body() updateRentalDto: UpdateRentalDto) {
     return this.rentalsService.update(+id, updateRentalDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.rentalsService.remove(+id);
   }
 }
