@@ -10,6 +10,9 @@ import { Public } from './decorators/public.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
+  /**
+   * Inscrit un nouvel utilisateur dans la base de données.
+   */
   @Public()
   @Post('register')
   @ApiOperation({ summary: 'Inscription d\'un nouvel utilisateur' })
@@ -18,6 +21,9 @@ export class AuthController {
     return this.authService.register(registerDto);
   }
 
+  /**
+   * Authentifie un utilisateur existant et génère son token d'accès.
+   */
   @Public()
   @Post('login')
   @ApiOperation({ summary: 'Connexion de l\'utilisateur' })
@@ -26,6 +32,9 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  /**
+   * Récupère le profil et les informations de l'utilisateur actuellement connecté.
+   */
   @ApiBearerAuth()
   @Get('me')
   @ApiOperation({ summary: 'Récupérer les infos de l\'utilisateur connecté' })

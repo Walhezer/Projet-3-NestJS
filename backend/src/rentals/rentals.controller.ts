@@ -13,6 +13,9 @@ import { extname } from 'path';
 export class RentalsController {
   constructor(private readonly rentalsService: RentalsService) { }
 
+  /**
+   * Crée une nouvelle annonce de location et gère l'upload de son image.
+   */
   @Post()
   @ApiOperation({ summary: 'Créer une nouvelle location' })
   @ApiResponse({ status: 201, description: 'Rental created!' })
@@ -35,6 +38,9 @@ export class RentalsController {
     return this.rentalsService.create(createRentalDto, ownerId, pictureUrl);
   }
 
+  /**
+   * Récupère la liste complète de toutes les locations disponibles.
+   */
   @Get()
   @ApiOperation({ summary: 'Récupérer toutes les locations' })
   @ApiResponse({ status: 200, description: 'Retourne le tableau des locations' })
@@ -42,6 +48,9 @@ export class RentalsController {
     return this.rentalsService.findAll();
   }
 
+  /**
+   * Récupère les informations détaillées d'une location spécifique via son identifiant.
+   */
   @Get(':id')
   @ApiOperation({ summary: 'Récupérer une location par son id' })
   @ApiResponse({ status: 200, description: 'Retourne la location et les infos du propriétaire' })
@@ -49,6 +58,9 @@ export class RentalsController {
     return this.rentalsService.findOne(+id);
   }
 
+  /**
+   * Met à jour les données textuelles d'une location existante.
+   */
   @Put(':id')
   @ApiOperation({ summary: 'Mettre à jour une location' })
   @ApiResponse({ status: 200, description: 'Rental updated!' })

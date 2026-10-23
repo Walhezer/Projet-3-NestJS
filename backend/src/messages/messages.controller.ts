@@ -9,6 +9,9 @@ import { CreateMessageDto } from './dto/create-message.dto';
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) { }
 
+  /**
+   * Envoie un nouveau message au propriétaire d'une location.
+   */
   @Post()
   @ApiOperation({ summary: 'Envoyer un message au propriétaire' })
   @ApiResponse({ status: 201, description: 'Message sent!' })
