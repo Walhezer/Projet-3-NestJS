@@ -33,7 +33,15 @@ npm install
 
 ## Configuration de la base de données
 
-1. Créez un fichier `.env` à la racine du dossier `backend` et configurez vos variables d'environnement. Exemple :
+1. **Préparation du serveur MySQL :**
+   Assurez-vous d'avoir un serveur MySQL local actif. Avant de connecter l'API, créez la base de données et un utilisateur restreint dédié en exécutant ce script SQL (par exemple via DBeaver ou phpMyAdmin) :
+   ```sql
+   CREATE DATABASE chatop_db;
+   CREATE USER 'chatop_master'@'localhost' IDENTIFIED WITH mysql_native_password BY 'votre_mot_de_passe';
+   GRANT ALL PRIVILEGES ON chatop_db.* TO 'chatop_master'@'localhost';
+   FLUSH PRIVILEGES;
+
+2. Créez un fichier `.env` à la racine du dossier `backend` et configurez vos variables d'environnement. Exemple :
 
 ```env
 # URL de connexion à votre base de données MySQL
@@ -46,7 +54,7 @@ JWT_SECRET="votre_cle_secrete_ultra_securisee"
 PORT=3001
 ```
 
-2. Générez le client Prisma et appliquez le schéma à votre base de données :
+3. Générez le client Prisma et appliquez le schéma à votre base de données :
 
 ```bash
 npx prisma generate
