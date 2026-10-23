@@ -37,7 +37,7 @@ npm install
 
 ```env
 # URL de connexion à votre base de données MySQL
-DATABASE_URL="mysql://root:password@localhost:3306/chatop_db"
+DATABASE_URL="mysql://chatop_master:votre_mot_de_passe@localhost:3306/chatop_db"
 
 # Clé secrète pour le chiffrement des tokens JWT (à modifier en production)
 JWT_SECRET="votre_cle_secrete_ultra_securisee"
