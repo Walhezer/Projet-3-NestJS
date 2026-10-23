@@ -7,7 +7,7 @@ export class CreateRentalDto {
 
   @IsString()
   @IsNotEmpty()
-  surface: string; 
+  surface: string;
 
   @IsString()
   @IsNotEmpty()

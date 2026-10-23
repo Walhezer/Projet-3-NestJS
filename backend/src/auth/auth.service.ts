@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register(registerDto: RegisterDto) {
     const existingUser = await this.prisma.users.findUnique({
@@ -70,6 +70,6 @@ export class AuthService {
     return {
       token: this.jwtService.sign(payload),
     };
-    
+
   }
 }

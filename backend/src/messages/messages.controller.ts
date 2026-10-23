@@ -7,7 +7,7 @@ import { CreateMessageDto } from './dto/create-message.dto';
 @ApiBearerAuth()
 @Controller('messages')
 export class MessagesController {
-  constructor(private readonly messagesService: MessagesService) {}
+  constructor(private readonly messagesService: MessagesService) { }
 
   @Post()
   @ApiOperation({ summary: 'Envoyer un message au propriétaire' })

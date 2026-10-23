@@ -11,7 +11,7 @@ import { extname } from 'path';
 @ApiBearerAuth()
 @Controller('rentals')
 export class RentalsController {
-  constructor(private readonly rentalsService: RentalsService) {}
+  constructor(private readonly rentalsService: RentalsService) { }
 
   @Post()
   @ApiOperation({ summary: 'Créer une nouvelle location' })

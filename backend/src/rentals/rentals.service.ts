@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class RentalsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createRentalDto: CreateRentalDto, ownerId: number, pictureUrl: string) {
     await this.prisma.rentals.create({
@@ -32,7 +32,7 @@ export class RentalsService {
     const formattedRentals = rentalsList.map(rental => {
       const { users, ...rentalData } = rental;
       const { password, ...safeOwner } = users;
-      
+
       return {
         ...rentalData,
         owner: safeOwner,
@@ -56,7 +56,7 @@ export class RentalsService {
 
     const { users, ...rentalData } = rental;
     const { password, ...safeOwner } = users;
-    
+
     return {
       ...rentalData,
       owner: safeOwner,
